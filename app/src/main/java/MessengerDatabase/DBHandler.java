@@ -1,0 +1,42 @@
+package MessengerDatabase;
+
+import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteDatabase;
+import android.content.Context;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.util.Log;
+/**
+ * Created by prati on 2/19/2018.
+ */
+
+public class DBHandler extends SQLiteOpenHelper{
+
+    public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+
+        super(context,"MessengerDB", factory, version);
+
+       // Log.v("db", "Constructor call");
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+
+       // Log.v("db", "On create start");
+        db.execSQL("DROP TABLE IF EXISTS Tb_KeyPair");
+        String CreateTable = "Create table Tb_KeyPair(" +
+                                "key TEXT UNIQUE NOT NULL,"+
+                                "value TEXT NOT NULL)";
+
+        db.execSQL(CreateTable);
+       // Log.v("db", "Table created");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion,
+                          int newVersion) {
+
+        db.execSQL("DROP TABLE IF EXISTS Tb_KeyPair");
+        onCreate(db);
+    }
+}
